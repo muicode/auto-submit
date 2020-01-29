@@ -1,8 +1,21 @@
 #include <stdio.h>
 int main(void)
 {
-    int n;
-    scanf("%d", &n);
-    printf("%s\n", (n<3) ? "NO" : ((n-2)%2==0) ? "YES" : "NO");
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    while(k--)
+    {
+        if (n%10 == 0)
+        {
+            n /= 10;
+        }
+        else
+        {
+            --n;
+        }
+    }
+
+    printf("%d\n", n);
     return 0;
 }

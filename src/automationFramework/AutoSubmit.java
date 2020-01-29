@@ -28,11 +28,13 @@ public class AutoSubmit
 
 	public static void login() throws InterruptedException
 	{
+		if (username == null || password == null)
+		{
+			System.out.println("Set your username and password....");
+			System.exit(1);
+		}
+		
 		System.out.println("Login...");
-
-		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--headless");
-		driver = new ChromeDriver();
 		driver.get("https://codeforces.com/enter?back=%2F");
 
 		// enter username
@@ -54,7 +56,6 @@ public class AutoSubmit
 	public static void navigateTo(String problemNumber, String problemLetter) throws InterruptedException
 	{
 		System.out.println("Copy-pasting codes..");
-		// navigate to that problem's page
 		driver.navigate().to("https://codeforces.com/problemset/submit");
 
 		// wait until login is done
@@ -73,7 +74,6 @@ public class AutoSubmit
 		List<String> lines = Files.readAllLines(Paths.get(sourceFile));
 		String code = String.join(System.lineSeparator(), lines);
 		
-//		Thread.sleep(1000);
 		WebElement element = driver.findElement(By.id("toggleEditorCheckbox"));
 		element.click();
 		
@@ -83,10 +83,6 @@ public class AutoSubmit
 		element = driver.findElement(By.className("submit"));
 		element.click();
 		
-//		Thread.sleep(2000);
-
-//		driver.get("https://codeforces.com/problemset/status");
-
 		List<WebElement> elems = driver.findElements(By.cssSelector("table.status-frame-datatable"));
 		elems = elems.get(0).findElements(By.cssSelector("tr"));
 		elems = elems.get(1).findElements(By.cssSelector("td"));
@@ -122,7 +118,7 @@ public class AutoSubmit
 
 		login();
 		
-		String problemNumber = "4";
+		String problemNumber = "977";
 		String problemLetter = "A";
 		navigateTo(problemNumber, problemLetter);
 
